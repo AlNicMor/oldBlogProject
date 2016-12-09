@@ -12,40 +12,39 @@ $register = "<a href='/users/register'>Register</a>";
     <div class="menunav">
         <h3>Menu</h3>
     </div>
-                    <ul>
-                        <li>
-                            <a href="/posts/index"> Home</a></li>
-                        <li>
-                            <?php 
-                                
-                                if (isset($_SESSION['username'])){
-                                    echo $logout;
-                                }
-                                else{
-                                    echo $login;
-                                }
-                                
-    
-                            ?></li>
-                        
-                        
-                        <li>
-                            <?php
-                                
-                                if (!isset($_SESSION['username'])){
-                                    echo $register;
-                                }
-                            
-                         ?></li>
-                        
-                        <li>
-                            
-                             <?php 
-                                
-                                if (isset($_SESSION['username'])){
-                                    echo $newpost;
-                                }
-                            
-                        ?></li>
-                    </ul>             
+    <ul>
+        <li>
+            <a href="/posts/index"> Home</a></li>
+        <li>
+            <?php
+
+            if (isset($_SESSION['username'])) {
+                echo $logout;
+            } else {
+                echo $login;
+            }
+
+
+            ?></li>
+
+
+        <li>
+            <?php
+
+            if (!isset($_SESSION['username'])) {
+                echo $register;
+            }
+
+            ?></li>
+
+        <li>
+
+            <?php
+
+            if (isset($_SESSION['username'])) {
+                echo $newpost;
+            }
+
+            ?></li>
+    </ul>
 </div>

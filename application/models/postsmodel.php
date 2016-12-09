@@ -1,12 +1,11 @@
 <?php
 
-/*
- * To change this template use Tools | Templates.
- */
-class PostsModel extends Model{
-    
-    public function getPosts(){
-        
+class PostsModel extends Model
+{
+
+    public function getPosts()
+    {
+
         $sql = "SELECT
                      posts.post_id,
                      users.username,
@@ -21,22 +20,23 @@ class PostsModel extends Model{
                INNER JOIN
                      users ON posts.user_id = users.user_id
                ORDER BY posts.timestamp DESC";
-        
+
         $this->_setSql($sql);
         $posts = $this->getAll();
-        
-        if(empty($posts)){
-            
+
+        if (empty($posts)) {
+
             return false;
         }
-        
+
         return $posts;
-        
+
     }
-    
-    
-    public function getPostById($id){
-        
+
+
+    public function getPostById($id)
+    {
+
         $sql = "SELECT
                      users.username,
                      posts.text,
@@ -51,20 +51,21 @@ class PostsModel extends Model{
                      users ON posts.user_id = users.user_id
                WHERE
                      posts.post_id = ?";
-        
+
         $this->_setSql($sql);
         $post = $this->getRow(array($id));
-        
-        if(empty($post)){
+
+        if (empty($post)) {
             return false;
         }
-        
+
         return $post;
-        
+
     }
-    
-    public function getPostComments($id){
-        
+
+    public function getPostComments($id)
+    {
+
         $sql = "SELECT
                      users.username,
                      comments.timestamp,
@@ -78,24 +79,25 @@ class PostsModel extends Model{
                WHERE
                      posts.post_id = ?
                ORDER BY comments.timestamp DESC";
-        
+
         $this->_setSql($sql);
         $comments = $this->getAll(array($id));
-        
-        if(empty($comments)){
+
+        if (empty($comments)) {
             return false;
         }
-        
+
         return $comments;
     }
-    
-        public function saveComment($user_id, $comtext, $id){
-        
+
+    public function saveComment($user_id, $comtext, $id)
+    {
+
         $sql = "INSERT INTO comments
                     (user_id, text, post_id)
                 VALUES
                     (?, ?, ?)";
-        $data= array(
+        $data = array(
             $user_id,
             $comtext,
             $id
@@ -104,7 +106,8 @@ class PostsModel extends Model{
         return $sth->execute($data);
     }
 
-    public function newComment($user_id, $cat, $ptext, $title){
+    public function newComment($user_id, $cat, $ptext, $title)
+    {
 
         $sql = "INSERT INTO posts
                     (user_id, category_id, text, title)
@@ -121,17 +124,18 @@ class PostsModel extends Model{
         $sth = $this->_db->prepare($sql);
         return $sth->execute($data);
     }
-    
-    public function getCategories(){
-        
+
+    public function getCategories()
+    {
+
         $sql = "SELECT
                     *
                 FROM
                     categories";
         $this->_setSql($sql);
         $cats = $this->getAll();
-        
+
         return $cats;
     }
-    
+
 }
